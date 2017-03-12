@@ -17,9 +17,10 @@
 			w = mmToPx( w );
 			h = mmToPx( h );
 			cornerRadius = mmToPx( cornerRadius );
+			shelfThickness = mmToPx( shelfThickness );
 			var t = mmToPx(materialThickness);
-			var b = mmToPx(20); // border
-			var so = mmToPx(3); // shelf overhang
+			var b = mmToPx(10); // border
+			var so = mmToPx(20); // shelf overhang
 			var slotWidth = 0.2*w;
 			var p = 5; // padding (visual only);
 			var svg = '';
@@ -32,6 +33,8 @@
 			svg += makeSvgCodeForBox( 0, 0, w, h, cornerRadius, cornerRadius);
 			svg += makeSvgCodeForSlot( b+so,h-b, slotWidth,t );
 			svg += makeSvgCodeForSlot( w-slotWidth-b-so,h-b, slotWidth,t );
+			// TODO: add the slot thingies to this shap
+			svg += makeSvgCodeForBox( b, b, w-b*2, shelfThickness, cornerRadius, cornerRadius);
 			svg += '</svg>';
 			return svg;
 		}

@@ -14,15 +14,15 @@ function makeSvgCodeForBox( x, y, w, h, cornerSize, cornerRadius ){
 		br = roundPathCorners( br, cornerRadius, false );
 		tr = roundPathCorners( tr, cornerRadius, false );
 	}
-	paths.push('<path id="outer-top-left" d="'+tl+'" ></path>');
-	paths.push('<path id="outer-left" d="M 0 '+cornerSize+'L 0 '+(h-cornerSize)+'" ></path>');
-	paths.push('<path id="outer-bottom-left" d="'+bl+'" ></path>');
-	paths.push('<path id="outer-bottom" d="M '+cornerSize+' '+h+' L '+(w-cornerSize)+' '+h+'" ></path>');
-	paths.push('<path id="outer-bottom-right" d="'+br+'" ></path>');
-	paths.push('<path id="outer-right" d="M '+w+' '+(h-cornerSize)+' L '+w+' '+cornerSize+'" ></path>');
-	paths.push('<path id="outer-top-right" d="'+tr+'"></path>');
-	paths.push('<path id="outer-top" d="M '+(w-cornerSize)+' 0 L '+cornerSize+' 0"></path>');
-	console.info(paths);
+	// top-left, left, bottom-left, bottom, bottom-right, right, top-right, top
+	paths.push('<path d="'+tl+'" ></path>');
+	paths.push('<path d="M 0 '+cornerSize+'L 0 '+(h-cornerSize)+'" ></path>');
+	paths.push('<path d="'+bl+'" ></path>');
+	paths.push('<path d="M '+cornerSize+' '+h+' L '+(w-cornerSize)+' '+h+'" ></path>');
+	paths.push('<path d="'+br+'" ></path>');
+	paths.push('<path d="M '+w+' '+(h-cornerSize)+' L '+w+' '+cornerSize+'" ></path>');
+	paths.push('<path d="'+tr+'"></path>');
+	paths.push('<path d="M '+(w-cornerSize)+' 0 L '+cornerSize+' 0"></path>');
 	return '<g transform="translate('+x+','+y+')">'+paths.join(' ')+'</g>';
 }
 

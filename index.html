@@ -13,11 +13,15 @@
 
 		<script>
 
-		function getSvgPreview(w,h,cornerRadius){
+		function getSvgPreview(w,h,cornerRadius,materialThickness,shelfThickness){
 			w = mmToPx( w );
 			h = mmToPx( h );
 			cornerRadius = mmToPx( cornerRadius );
-			var p = 5; // padding;
+			var t = mmToPx(materialThickness);
+			var b = mmToPx(20); // border
+			var so = mmToPx(3); // shelf overhang
+			var slotWidth = 0.2*w;
+			var p = 5; // padding (visual only);
 			var svg = '';
 			svg += '<svg ';
 			svg += 'viewport="-'+p+' -'+p+' '+w+' '+h+'" ';
@@ -26,8 +30,15 @@
 			svg += '>';
 			svg += '<style>'+getCssStylePreview()+'</style>';
 			svg += makeSvgCodeForBox( 0, 0, w, h, cornerRadius, cornerRadius);
+			svg += makeSvgCodeForSlot( b+so,h-b, slotWidth,t );
+			svg += makeSvgCodeForSlot( w-slotWidth-b-so,h-b, slotWidth,t );
 			svg += '</svg>';
 			return svg;
+		}
+
+		function makeSvgCodeForSlot(x,y,w,h){
+			var s = Math.min(w,h)*0.5;
+			return makeSvgCodeForBox( x, y, w, h, s, 0 );
 		}
 
 		$(document).ready(function(){
@@ -35,7 +46,9 @@
 				$('#preview-area').html( getSvgPreview(
 					parseFloat($('#input-phone-width').val()),
 					parseFloat($('#input-phone-height').val()),
-					parseFloat($('#input-phone-corner-radius').val())
+					parseFloat($('#input-phone-corner-radius').val()),
+					parseFloat($('#input-material-thickness').val()),
+					parseFloat($('#input-shelf-depth').val())
 				) );
 			});
 			$('#btn-download-svg').on('click',function(e){
@@ -43,7 +56,9 @@
 				var svg = getSvgPreview(
 					parseFloat($('#input-phone-width').val()),
 					parseFloat($('#input-phone-height').val()),
-					parseFloat($('#input-phone-corner-radius').val())
+					parseFloat($('#input-phone-corner-radius').val()),
+					parseFloat($('#input-material-thickness').val()),
+					parseFloat($('#input-shelf-depth').val())
 				);
 				downloadURI('data:text/svg,'+svg, 'svg-test.svg');
 
@@ -73,6 +88,17 @@
 				<label for="input-phone-corner-radius">Corner Radius (mm)</label>
 				<input type="text" class="form-control" id="input-phone-corner-radius" placeholder="10">
 			</div>
+
+			<div class="form-group">
+				<label for="input-material-thickness">Material Thickness (mm)</label>
+				<input type="text" class="form-control" id="input-material-thickness" placeholder="3.175">
+			</div>
+
+			<div class="form-group">
+				<label for="input-shelf-depth">Shelf Depth (mm)</label>
+				<input type="text" class="form-control" id="input-shelf-depth" placeholder="6">
+			</div>
+
 			<button id="btn-download-svg" type="submit" class="btn btn-default">Download SVG</button>
 		</form>
 

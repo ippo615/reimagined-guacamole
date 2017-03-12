@@ -13,11 +13,15 @@
 
 		<script>
 
-		function getSvgPreview(w,h,cornerRadius,materialThickness,shelfThickness){
+		// TODO:
+		// https://sourceforge.net/projects/jsclipper/
+
+		function getSvgPreview(w,h,cornerRadius,materialThickness,shelfThickness,tabLength){
 			w = mmToPx( w );
 			h = mmToPx( h );
 			cornerRadius = mmToPx( cornerRadius );
 			shelfThickness = mmToPx( shelfThickness );
+			tabLength = mmToPx(tabLength);
 			var t = mmToPx(materialThickness);
 			var b = mmToPx(10); // border
 			var so = mmToPx(20); // shelf overhang
@@ -35,6 +39,8 @@
 			svg += makeSvgCodeForSlot( w-slotWidth-b-so,h-b, slotWidth,t );
 			// TODO: add the slot thingies to this shap
 			svg += makeSvgCodeForBox( b, b, w-b*2, shelfThickness, cornerRadius, cornerRadius);
+			svg += makeSvgCodeForTab( b+so, b+shelfThickness, slotWidth, tabLength, cornerRadius, cornerRadius);
+			svg += makeSvgCodeForTab( w-slotWidth-b-so, b+shelfThickness, slotWidth, tabLength, cornerRadius, cornerRadius);
 			svg += '</svg>';
 			return svg;
 		}
@@ -51,7 +57,8 @@
 					parseFloat($('#input-phone-height').val()),
 					parseFloat($('#input-phone-corner-radius').val()),
 					parseFloat($('#input-material-thickness').val()),
-					parseFloat($('#input-shelf-depth').val())
+					parseFloat($('#input-shelf-depth').val()),
+					parseFloat($('#input-tab-length').val())
 				) );
 			});
 			$('#btn-download-svg').on('click',function(e){
@@ -61,7 +68,8 @@
 					parseFloat($('#input-phone-height').val()),
 					parseFloat($('#input-phone-corner-radius').val()),
 					parseFloat($('#input-material-thickness').val()),
-					parseFloat($('#input-shelf-depth').val())
+					parseFloat($('#input-shelf-depth').val()),
+					parseFloat($('#input-tab-length').val())
 				);
 				downloadURI('data:text/svg,'+svg, 'svg-test.svg');
 
@@ -81,11 +89,11 @@
 		<form>
 			<div class="form-group">
 				<label for="input-phone-width">Width (mm)</label>
-				<input type="text" class="form-control" id="input-phone-width" placeholder="10">
+				<input type="text" class="form-control" id="input-phone-width" placeholder="240">
 			</div>
 			<div class="form-group">
 				<label for="input-phone-height">Height (mm)</label>
-				<input type="text" class="form-control" id="input-phone-height" placeholder="10">
+				<input type="text" class="form-control" id="input-phone-height" placeholder="180">
 			</div>
 			<div class="form-group">
 				<label for="input-phone-corner-radius">Corner Radius (mm)</label>
@@ -100,6 +108,11 @@
 			<div class="form-group">
 				<label for="input-shelf-depth">Shelf Depth (mm)</label>
 				<input type="text" class="form-control" id="input-shelf-depth" placeholder="6">
+			</div>
+
+			<div class="form-group">
+				<label for="input-tab-length">Tab Length (mm)</label>
+				<input type="text" class="form-control" id="input-tab-length" placeholder="50">
 			</div>
 
 			<button id="btn-download-svg" type="submit" class="btn btn-default">Download SVG</button>

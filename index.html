@@ -11,15 +11,19 @@
 		<script src="js/svg-tools.js"></script>
 
 		<script>
-		// TODO: set svg viewport
 
 		function getSvgPreview(w,h,cornerRadius){
+			w = mmToPx( w );
+			h = mmToPx( h );
+			cornerRadius = mmToPx( cornerRadius );
+			var p = 5; // padding;
 			var svg = '';
-			svg += '<svg '
-			svg += 'viewport="0 0 '+w+'mm '+h+'mm" ';
-			svg += 'width="'+w+'mm" ';
-			svg += 'height="'+h+'mm" ';
+			svg += '<svg ';
+			svg += 'viewport="-'+p+' -'+p+' '+w+' '+h+'" ';
+			svg += 'width="'+(w+p*2)+'px" ';
+			svg += 'height="'+(h+p*2)+'px" ';
 			svg += '>';
+			svg += '<style>'+getCssStylePreview()+'</style>';
 			svg += makeSvgCodeForBox( 0, 0, w, h, cornerRadius, cornerRadius);
 			svg += '</svg>';
 			return svg;
@@ -33,13 +37,18 @@
 					parseFloat($('#input-phone-corner-radius').val())
 				) );
 			});
-			$('#btn-download-svg').on('click',function(){
+			$('#btn-download-svg').on('click',function(e){
+				// Render the svg and let the user download it
 				var svg = getSvgPreview(
 					parseFloat($('#input-phone-width').val()),
 					parseFloat($('#input-phone-height').val()),
 					parseFloat($('#input-phone-corner-radius').val())
 				);
 				downloadURI('data:text/svg,'+svg, 'svg-test.svg');
+
+				// Stop the form from being submitted if this is a submit button
+				e.preventDefault();
+				return false;
 			});
 			//var svg = '<svg>'+makeSvgCodeForBox( 0, 20, 200, 100, 20, 5)+'</svg>';
 			//$('body').html(svg);

@@ -26,3 +26,45 @@ function makeSvgCodeForBox( x, y, w, h, cornerSize, cornerRadius ){
 	return '<g transform="translate('+x+','+y+')">'+paths.join(' ')+'</g>';
 }
 
+
+/* A note about SVG Scale and coordinates
+ * http://wiki.inkscape.org/wiki/index.php/Units_In_Inkscape
+ * "the CSS working group dictated that one inch would be fixed to
+ * 96 pixels regardless of screen resolution"
+ *
+ * This means that we convert everything to pixels.
+ * 96px -> 1in -> 25.4mm
+ * 96px / 25.4mm = 3.77952755905512px/mm
+ *
+ * Testing that theory: I found that it's 90 DPI on Inkscape v0.48
+ * So I changed the scale in my calcs from 96 DPI to 90 DPI
+ */
+
+function mmToPx( mm ){
+	//return mm * 96.0/25.4;
+	return mm * 90.0/25.4;
+}
+
+// Just so i can easily style the svgs
+function getCssStyleLaserCutting(){
+	var style = '';
+	style += [
+		'path {',
+		'stroke: black;',
+		'stroke-width:1px;',
+		'fill:none;',
+		'}'
+	].join(' ');
+	return style;
+}
+function getCssStylePreview(){
+	var style = '';
+	style += [
+		'path {',
+		'stroke: black;',
+		'stroke-width:1px;',
+		'fill:none;',
+		'}'
+	].join(' ');
+	return style;
+}

@@ -1,125 +1,27 @@
+<!DOCTYPE html>
+
 <html>
-	<head>
-		<title>Phone Stand Maker</title> 
-		<!-- http://stackoverflow.com/questions/6793312/how-to-use-jquery-in-svg-scalable-vector-graphics#6794343 -->
+<head>
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/openjscad/csg.js"></script>
+	<script src="vendor/openjscad/formats.js"></script>
+	<script src="vendor/misc/downloadURI.js"></script>
+	<script src="vendor/threejs/three.js"></script>
+	<script src="vendor/threejs/controls/orbit-controls.js"></script>
+	<script src="vendor/threejs/loaders/stl-loader.js"></script>
 
-		<link rel="stylesheet" href="css/svg-styles.css">
-		<link rel="stylesheet" href="css/ui-styles.css">
+	<script src="js/preview.js"></script>
 
-		<script src="vendor/jquery/jquery.min.js"></script>
-		<script src="vendor/misc/path-rounding.js"></script>
-		<script src="vendor/misc/download-uri.js"></script>
-		<script src="js/svg-tools.js"></script>
+	<script src="js/object-to-make.js"></script>
+	<script src="js/main.js"></script>
 
-		<script>
+	<link rel="stylesheet" href="css/main.css" type="text/css">
 
-		// TODO:
-		// https://sourceforge.net/projects/jsclipper/
+	<title>Minimal OpenJSCAD Example</title> 
+</head>
 
-		function getSvgPreview(w,h,cornerRadius,materialThickness,shelfThickness,tabLength){
-			w = mmToPx( w );
-			h = mmToPx( h );
-			cornerRadius = mmToPx( cornerRadius );
-			shelfThickness = mmToPx( shelfThickness );
-			tabLength = mmToPx(tabLength);
-			var t = mmToPx(materialThickness);
-			var b = mmToPx(10); // border
-			var so = mmToPx(20); // shelf overhang
-			var slotWidth = 0.2*w;
-			var p = 5; // padding (visual only);
-			var svg = '';
-			svg += '<svg ';
-			svg += 'viewport="-'+p+' -'+p+' '+w+' '+h+'" ';
-			svg += 'width="'+(w+p*2)+'px" ';
-			svg += 'height="'+(h+p*2)+'px" ';
-			svg += '>';
-			svg += '<style>'+getCssStylePreview()+'</style>';
-			svg += makeSvgCodeForBox( 0, 0, w, h, cornerRadius, cornerRadius);
-			svg += makeSvgCodeForSlot( b+so,h-b, slotWidth,t );
-			svg += makeSvgCodeForSlot( w-slotWidth-b-so,h-b, slotWidth,t );
-			// TODO: add the slot thingies to this shap
-			svg += makeSvgCodeForBox( b, b, w-b*2, shelfThickness, cornerRadius, cornerRadius);
-			svg += makeSvgCodeForTab( b+so, b+shelfThickness, slotWidth, tabLength, cornerRadius, cornerRadius);
-			svg += makeSvgCodeForTab( w-slotWidth-b-so, b+shelfThickness, slotWidth, tabLength, cornerRadius, cornerRadius);
-			svg += '</svg>';
-			return svg;
-		}
-
-		function makeSvgCodeForSlot(x,y,w,h){
-			var s = Math.min(w,h)*0.5;
-			return makeSvgCodeForBox( x, y, w, h, s, 0 );
-		}
-
-		$(document).ready(function(){
-			$('input').on('change',function(){
-				$('#preview-area').html( getSvgPreview(
-					parseFloat($('#input-phone-width').val()),
-					parseFloat($('#input-phone-height').val()),
-					parseFloat($('#input-phone-corner-radius').val()),
-					parseFloat($('#input-material-thickness').val()),
-					parseFloat($('#input-shelf-depth').val()),
-					parseFloat($('#input-tab-length').val())
-				) );
-			});
-			$('#btn-download-svg').on('click',function(e){
-				// Render the svg and let the user download it
-				var svg = getSvgPreview(
-					parseFloat($('#input-phone-width').val()),
-					parseFloat($('#input-phone-height').val()),
-					parseFloat($('#input-phone-corner-radius').val()),
-					parseFloat($('#input-material-thickness').val()),
-					parseFloat($('#input-shelf-depth').val()),
-					parseFloat($('#input-tab-length').val())
-				);
-				downloadURI('data:text/svg,'+svg, 'svg-test.svg');
-
-				// Stop the form from being submitted if this is a submit button
-				e.preventDefault();
-				return false;
-			});
-			//var svg = '<svg>'+makeSvgCodeForBox( 0, 20, 200, 100, 20, 5)+'</svg>';
-			//$('body').html(svg);
-			//downloadURI( 'data:text/svg,'+svg, 'svg-test.svg' );
-		});
-		</script>
-	</head>
-
-	<body>
-
-		<form>
-			<div class="form-group">
-				<label for="input-phone-width">Width (mm)</label>
-				<input type="text" class="form-control" id="input-phone-width" placeholder="240">
-			</div>
-			<div class="form-group">
-				<label for="input-phone-height">Height (mm)</label>
-				<input type="text" class="form-control" id="input-phone-height" placeholder="180">
-			</div>
-			<div class="form-group">
-				<label for="input-phone-corner-radius">Corner Radius (mm)</label>
-				<input type="text" class="form-control" id="input-phone-corner-radius" placeholder="10">
-			</div>
-
-			<div class="form-group">
-				<label for="input-material-thickness">Material Thickness (mm)</label>
-				<input type="text" class="form-control" id="input-material-thickness" placeholder="3.175">
-			</div>
-
-			<div class="form-group">
-				<label for="input-shelf-depth">Shelf Depth (mm)</label>
-				<input type="text" class="form-control" id="input-shelf-depth" placeholder="6">
-			</div>
-
-			<div class="form-group">
-				<label for="input-tab-length">Tab Length (mm)</label>
-				<input type="text" class="form-control" id="input-tab-length" placeholder="50">
-			</div>
-
-			<button id="btn-download-svg" type="submit" class="btn btn-default">Download SVG</button>
-		</form>
-
-		<div id="preview-area"></div>
-
-	</body>
+<body>
+	<button id="btn-do-it">Do it</button>
+</body>
 
 </html>

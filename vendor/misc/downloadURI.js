@@ -1,4 +1,3 @@
-
 // http://stackoverflow.com/questions/3916191/download-data-url-file#15832662
 function downloadURI(uri, name) {
 	var link = document.createElement("a");

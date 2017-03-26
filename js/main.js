@@ -1,17 +1,40 @@
 $(function(){
 
+	var preview;
+
+	function readOptions(){
+		return {
+			'phone_length': parseFloat($('#phone_length').val()),
+			'phone_width': parseFloat($('#phone_width').val()),
+			'phone_corner_radius': parseFloat($('#phone_corner_radius').val()),
+			'shelf_thickness': parseFloat($('#shelf_thickness').val()),
+			'border': parseFloat($('#border').val()),
+			'tab_length': parseFloat($('#tab_length').val()),
+			'tab_width': parseFloat($('#tab_width').val()),
+			'material_thickness': parseFloat($('#material_thickness').val()),
+		};
+	};
+
 	function getThingy(){
-		return main({
-			'phone_length': 145,
-			'phone_width': 70,
-			'phone_corner_radius': 5,
-			'shelf_thickness': 20,
-			'border': 20,
-			'tab_length': 40,
-			'tab_width': 20,
-			'material_thickness': 3.175
-		});
+		return main(readOptions());
 	}
+
+	function createInputString( data ){
+		var html = '';
+		html += '<div class="input-group">';
+		html += '<label for="'+data.name+'">'+data.caption+'</label>';
+		html += '<input id="'+data.name+'" type="'+data.type+'" value="'+data.initial+'">';
+		html += '</div>';
+		return html;
+	}
+	function createInputs( parameters ){
+		var html = '';
+		for( var i=0, l=parameters.length; i<l; i+=1 ){
+			html += createInputString(parameters[i]);
+		}
+		$('#side-bar-input').html( html );
+	}
+	createInputs( getParameterDefinitions() );
 
 	$('#btn-do-it').on('click',function(){
 		// Generate the openjscad model
@@ -25,16 +48,23 @@ $(function(){
 		downloadURI(url,'test.svg');
 	});
 
+	$('#btn-update-preview').on('click',function(){
+		var x = getThingy();
+		loader.load( URL.createObjectURL(x.extrude({offset: [0,0,parseFloat($('#material_thickness').val())]}).toStlString()), function ( geometry ) {
+			preview.replaceGeometry( geometry );
+		} );
+	});
+
 	var loader = new THREE.STLLoader();
 	
 	var x = getThingy();
 	loader.load( URL.createObjectURL(x.extrude({offset: [0,0,3.175]}).toStlString()), function ( geometry ) {
 
-		var preview = new Preview({
+		preview = new Preview({
 			geometry: geometry,//foldFunction(1).getGeometry(),
 			width: Math.round(window.innerWidth / 2),
 			height: Math.round(window.innerHeight),
-			parent: document.body,
+			parent: $('#preview-area')[0],
 			materials: [
 				new THREE.MeshPhongMaterial({
 					specular: 0xAACCFF,

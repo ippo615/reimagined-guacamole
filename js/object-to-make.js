@@ -8,7 +8,7 @@ function getParameterDefinitions() {
         { name: 'border', type: 'int', initial: 20, caption: 'Border?' },
         { name: 'tab_length', type: 'int', initial: 40, caption: 'Tab Length?' },
         { name: 'tab_width', type: 'int', initial: 20, caption: 'Tab Width?' },
-        { name: 'material_thickness', type: 'number', initial: 3.175, caption: 'Material Thickness?' },
+        { name: 'material_thickness', type: 'number', initial: 3.175, caption: 'Material Thickness?' }
     ];
 }
 

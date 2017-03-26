@@ -14,3 +14,34 @@ body {
 	bottom: 1em;
 	right: 1em;
 }
+#btn-update-preview {
+	position: absolute;
+	bottom: 1em;
+	right: 10em;
+}
+
+#side-bar-input {
+	position: absolute;
+	width: 50%;
+	top: 0;
+	right: 0;
+	bottom: 0;
+}
+#preview-area {
+	position: absolute;
+	width: 50%;
+	top: 0;
+	left: 0;
+	bottom: 0;
+}
+
+.input-group {
+	padding-left: 0.5em;
+	padding-top: 0.5em;
+}
+label {
+	display: block;
+}
+input {
+	display: block;
+}

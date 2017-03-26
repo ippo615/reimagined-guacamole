@@ -53,7 +53,7 @@ var Preview = (function(){
 		this.camera = camera;
 		this.scene.add( this.camera );
 
-		this.controls = new THREE.OrbitControls( camera );
+		this.controls = new THREE.OrbitControls( camera, this.renderer.domElement );
 		this.controls.damping = 0.2;
 		var renderFunc = makeRenderFunc( this );
 		this.controls.addEventListener( 'change', renderFunc );

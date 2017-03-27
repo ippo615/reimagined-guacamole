@@ -1,14 +1,14 @@
 
 function getParameterDefinitions() {
     return [
-        { name: 'phone_length', type: 'int', initial: 145, caption: 'Length?' },
-        { name: 'phone_width', type: 'int', initial: 70, caption: 'Width?' },
-        { name: 'phone_corner_radius', type: 'int', initial: 5, caption: 'Corner?' },
-        { name: 'shelf_thickness', type: 'int', initial: 20, caption: 'Shelf Thickness?' },
-        { name: 'border', type: 'int', initial: 20, caption: 'Border?' },
-        { name: 'tab_length', type: 'int', initial: 40, caption: 'Tab Length?' },
-        { name: 'tab_width', type: 'int', initial: 20, caption: 'Tab Width?' },
-        { name: 'material_thickness', type: 'number', initial: 3.175, caption: 'Material Thickness?' }
+        { name: 'phone_length', type: 'int', initial: 145, caption: 'Length (mm)' },
+        { name: 'phone_width', type: 'int', initial: 70, caption: 'Width (mm)' },
+        { name: 'phone_corner_radius', type: 'int', initial: 5, caption: 'Corner radius (mm)' },
+        { name: 'shelf_thickness', type: 'int', initial: 20, caption: 'Shelf Thickness (mm)' },
+        { name: 'border', type: 'int', initial: 20, caption: 'Border (mm)' },
+        { name: 'tab_length', type: 'int', initial: 40, caption: 'Tab Length (mm)' },
+        { name: 'tab_width', type: 'int', initial: 20, caption: 'Tab Width (mm)' },
+        { name: 'material_thickness', type: 'number', initial: 3.175, caption: 'Material Thickness (mm)' }
     ];
 }
 
